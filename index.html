@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitol | 60 Years Timeline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Outfit:wght@300;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #051624;
+            --accent-cyan: #00f2ff;
+            --accent-gold: #ff9d00;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --line-color: rgba(0, 242, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 20%, #0a2a44 0%, var(--bg-color) 80%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Premium Noise Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            padding: 100px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 200px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-gold), #ff5e00);
+            margin: 0 auto 20px;
+            border-radius: 50% 50% 10% 50%;
+            transform: rotate(-45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(255, 157, 0, 0.4);
+        }
+
+        .logo-text {
+            transform: rotate(45deg);
+            color: #051624;
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        h1 span {
+            display: block;
+            font-weight: 700;
+            font-size: 3.5rem;
+        }
+
+        /* Timeline Section */
+        .timeline-wrapper {
+            position: relative;
+            min-height: 3000px;
+            /* Enough scroll space */
+        }
+
+        .svg-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #main-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .timeline-line {
+            fill: none;
+            stroke: var(--line-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .timeline-line-active {
+            fill: none;
+            stroke: var(--accent-cyan);
+            stroke-width: 2.5;
+            filter: drop-shadow(0 0 8px var(--accent-cyan));
+        }
+
+        /* Labels and Points */
+        .timeline-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .year-node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--bg-color);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .year-node:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+            background: var(--accent-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 30px var(--accent-cyan);
+        }
+
+        .label {
+            position: absolute;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            max-width: 200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            width: 40%;
+        }
+
+        .label.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .label b {
+            display: block;
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h1 span {
+                font-size: 2.5rem;
+            }
+
+            .year-node {
+                width: 50px;
+                height: 50px;
+                font-size: 0.8rem;
+            }
+
+            .label {
+                font-size: 0.8rem;
+                max-width: 140px;
+            }
+
+            .label b {
+                font-size: 0.9rem;
+            }
+
+            .label[style*="left: 680px"] {
+                left: 55% !important;
+            }
+
+            .label[style*="right: 680px"] {
+                right: 55% !important;
+            }
+
+            header {
+                margin-bottom: 150px;
+            }
+
+            .big-60 {
+                font-size: 8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .label {
+                width: 35%;
+                max-width: 100px;
+            }
+
+            .countdown-boxes {
+                gap: 8px;
+            }
+
+            .box {
+                width: 50px;
+                height: 50px;
+            }
+
+            .box span {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Popup Styles */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: rgba(10, 31, 47, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            z-index: 1000;
+            max-width: 400px;
+            width: 90%;
+            opacity: 0;
+            pointer-events: none;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .popup.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: all;
+        }
+
+        .popup h3 {
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--accent-cyan);
+            border: none;
+            border-radius: 30px;
+            color: var(--bg-color);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Footer Section */
+        footer {
+            text-align: center;
+            padding: 100px 0;
+            background: linear-gradient(to top, rgba(0, 242, 255, 0.05), transparent);
+        }
+
+        .big-60 {
+            font-size: 12rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, var(--accent-gold), transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 20px;
+            opacity: 0.2;
+        }
+
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .box {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border-bottom: 3px solid var(--accent-gold);
+        }
+
+        .box span {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .box label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .scrolldown-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.5;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Flowing Lines Animation */
+        .tech-line {
+            stroke-dasharray: 10, 15;
+            animation: dashFlow 20s linear infinite;
+        }
+
+        @keyframes dashFlow {
+            from {
+                stroke-dashoffset: 500;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                filter: drop-shadow(0 0 2px var(--accent-cyan));
+            }
+
+            50% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 15px var(--accent-cyan));
+            }
+        }
+
+        /* Halo Pulse for Nodes */
+        .year-node::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent-cyan);
+            border-radius: 50%;
+            animation: haloPulse 2s linear infinite;
+        }
+
+        @keyframes haloPulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        /* Dynamic Energy Field Background */
+        .energy-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: gridMove 60s linear infinite;
+        }
+
+        @keyframes gridMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 500px 1000px;
+            }
+        }
+
+        /* Data Packet Animation */
+        .packet {
+            fill: var(--accent-cyan);
+            filter: drop-shadow(0 0 5px var(--accent-cyan));
+        }
+
+        /* Scanner Beam */
+        #scanner-beam {
+            fill: none;
+            stroke: var(--accent-cyan);
+            stroke-width: 1;
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="energy-field"></div>
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h3 id="pop-year">1966</h3>
+        <p id="pop-text">Deep dive into the history of Vitol's expansion and global impact during this pivotal year.</p>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+
+    <div class="container">
+        <header id="header">
+            <div class="logo-placeholder">
+                <div class="logo-text">RSVP</div>
+            </div>
+            <h1>Vitol invites you to celebrate <span>60 Years</span></h1>
+            <p style="margin-top: 20px; opacity: 0.7;">Scroll to explore our journey through time</p>
+        </header>
+
+        <div class="timeline-wrapper">
+            <div class="svg-container">
+                <svg id="main-svg" viewBox="0 0 1000 3000" preserveAspectRatio="xMidYMin meet">
+                    <!-- Scanner Beam -->
+                    <rect id="scanner-beam" x="0" y="-50" width="1000" height="100" />
+
+                    <!-- The Background Static Line -->
+                    <path class="timeline-line pulse-glow" d="M500,0 L500,3000" />
+
+                    <!-- Tech Background Circuits -->
+                    <g opacity="0.15" class="tech-line">
+                        <path id="bg-p1" class="timeline-line" d="M100,200 L200,200 Q230,200 230,230 L230,400" />
+                        <path id="bg-p2" class="timeline-line" d="M900,100 L800,100 Q770,100 770,130 L770,300" />
+                        <path id="bg-p3" class="timeline-line" d="M150,1500 L250,1500 Q280,1500 280,1530 L280,1700" />
+                        <path id="bg-p4" class="timeline-line" d="M850,2200 L750,2200 Q720,2200 720,2230 L720,2400" />
+                        <!-- Additional Tech Details -->
+                        <path class="timeline-line" d="M0,500 L100,500 Q130,500 130,530 L130,800" />
+                        <path class="timeline-line" d="M1000,1200 L900,1200 Q870,1200 870,1230 L870,1500" />
+
+                        <!-- Fan lines at the bottom -->
+                        <path class="timeline-line pulse-glow" d="M150,2500 L500,2850" />
+                        <path class="timeline-line pulse-glow" d="M850,2500 L500,2850" />
+                        <path class="timeline-line pulse-glow" d="M300,2600 L500,2850" />
+                        <path class="timeline-line pulse-glow" d="M700,2600 L500,2850" />
+                        <circle cx="150" cy="2500" r="3" fill="var(--accent-cyan)" />
+                        <circle cx="850" cy="2500" r="3" fill="var(--accent-cyan)" />
+                    </g>
+
+                    <!-- Branch links (Curved) -->
+                    <path id="b1966" class="timeline-line tech-line" d="M500,400 Q650,400 650,450" />
+                    <path id="b1975" class="timeline-line tech-line" d="M500,800 Q350,800 350,850" />
+                    <path id="b1985" class="timeline-line tech-line" d="M500,1200 Q650,1200 650,1250" />
+                    <path id="b1995" class="timeline-line tech-line" d="M500,1600 Q350,1600 350,1650" />
+                    <path id="b2005" class="timeline-line tech-line" d="M500,2000 Q650,2000 650,2050" />
+                    <path id="b2015" class="timeline-line tech-line" d="M500,2400 Q350,2400 350,2450" />
+                    <path class="timeline-line pulse-glow" d="M500,2800 L500,2850" />
+
+                    <!-- Active Growing Line (Curved Branches) -->
+                    <path id="active-path" class="timeline-line-active"
+                        d="M500,0 L500,400 Q650,400 650,450 M500,400 L500,800 Q350,800 350,850 M500,800 L500,1200 Q650,1200 650,1250 M500,1200 L500,1600 Q350,1600 350,1650 M500,1600 L500,2000 Q650,2000 650,2050 M500,2000 L500,2400 Q350,2400 350,2450 M500,2400 L500,2850" />
+
+                    <!-- Traveling Packets -->
+                    <circle class="packet" r="4" cx="0" cy="0">
+                        <animateMotion dur="5s" repeatCount="indefinite" path="M500,0 L500,400 Q650,400 650,450" />
+                    </circle>
+                    <circle class="packet" r="4" cx="0" cy="0">
+                        <animateMotion dur="7s" repeatCount="indefinite" path="M500,400 L500,800 Q350,800 350,850" />
+                    </circle>
+                    <circle class="packet" r="3" cx="0" cy="0" opacity="0.6">
+                        <animateMotion dur="4s" repeatCount="indefinite"
+                            path="M100,200 L200,200 Q230,200 230,230 L230,400" />
+                    </circle>
+                    <circle class="packet" r="3" cx="0" cy="0" opacity="0.6">
+                        <animateMotion dur="6s" repeatCount="indefinite"
+                            path="M900,100 L800,100 Q770,100 770,130 L770,300" />
+                    </circle>
+                    <circle class="packet" r="3" cx="0" cy="0" opacity="0.4">
+                        <animateMotion dur="8s" repeatCount="indefinite" path="M500,800 L500,1200 Q650,1200 650,1250" />
+                    </circle>
+                    <circle class="packet" r="3" cx="0" cy="0" opacity="0.4">
+                        <animateMotion dur="10s" repeatCount="indefinite"
+                            path="M500,1200 L500,1600 Q350,1600 350,1650" />
+                    </circle>
+                    <circle class="packet" r="2" cx="0" cy="0" opacity="0.3">
+                        <animateMotion dur="12s" repeatCount="indefinite"
+                            path="M500,1600 L500,2000 Q650,2000 650,2050" />
+                    </circle>
+                </svg>
+            </div>
+
+            <div class="timeline-content">
+                <!-- 1966 -->
+                <div class="year-node" style="top: 450px;"
+                    onclick="openPopup('1966', 'Barge trading begins. Vitol established its roots in Rotterdam, focusing on oil product shipments.')">
+                    1966</div>
+                <div class="label" style="top: 435px; left: 680px;">
+                    <b>Barge Trading</b>
+                    First operations launched in the heart of Europe.
+                </div>
+
+                <!-- 1975 -->
+                <div class="year-node" style="top: 850px;"
+                    onclick="openPopup('1975', 'Geographic expansion and product trading surge. Expansion into new markets and diversifying the portfolio.')">
+                    1975</div>
+                <div class="label" style="top: 835px; right: 680px; text-align: right;">
+                    <b>Product Trading</b>
+                    Geographic expansion across continents.
+                </div>
+
+                <!-- 1985 -->
+                <div class="year-node" style="top: 1250px;"
+                    onclick="openPopup('1985', 'Strategic investments in storage and terminal assets to secure the supply chain.')">
+                    1985</div>
+                <div class="label" style="top: 1235px; left: 680px;">
+                    <b>Refining Investments</b>
+                    Moving downstream for better integration.
+                </div>
+
+                <!-- 1995 -->
+                <div class="year-node" style="top: 1650px;"
+                    onclick="openPopup('1995', 'Exploration and production activities take center stage, defining a new era of energy.')">
+                    1995</div>
+                <div class="label" style="top: 1635px; right: 680px; text-align: right;">
+                    <b>Exploration & Production</b>
+                    Developing upstream capabilities globally.
+                </div>
+
+                <!-- 2005 -->
+                <div class="year-node" style="top: 2050px;"
+                    onclick="openPopup('2005', 'Entering the utilities sector. Providing energy solutions beyond just liquid fuels.')">
+                    2005</div>
+                <div class="label" style="top: 2035px; left: 680px;">
+                    <b>Utilities & Power</b>
+                    Diversifying into the power and utility grid.
+                </div>
+
+                <!-- 2015 -->
+                <div class="year-node" style="top: 2450px;"
+                    onclick="openPopup('2015', 'Retail expansion and sustainable energy initiatives begin to shape the future.')">
+                    2015</div>
+                <div class="label" style="top: 2435px; right: 680px; text-align: right;">
+                    <b>Retail & Renewables</b>
+                    Reaching end-consumers and focusing on sustainability.
+                </div>
+
+                <!-- 2026 -->
+                <div class="year-node"
+                    style="top: 2850px; background: var(--accent-gold); border-color: var(--accent-gold); color: #000;"
+                    onclick="openPopup('2026', 'A moment in time where we come together to share the celebration of sixty years of excellence.')">
+                    60</div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="big-60">60</div>
+            <h2>A moment in time</h2>
+            <p>we come together and share the celebration</p>
+
+            <div class="countdown-boxes">
+                <div class="box"><span id="days">00</span><label>Days</label></div>
+                <div class="box"><span id="hours">00</span><label>Hours</label></div>
+                <div class="box" style="background: var(--accent-gold); color: #000;"><span
+                        id="mins">00</span><label>Mins</label></div>
+                <div class="box" style="background: var(--accent-gold); color: #000;"><span
+                        id="secs">00</span><label>Secs</label></div>
+            </div>
+
+            <p style="opacity: 0.5;">Thursday, April 30, 2026</p>
+        </footer>
+    </div>
+
+    <div class="scrolldown-hint">Scroll Down</div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Initial entry animation
+        const tl = gsap.timeline();
+        tl.to("#header", {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: "expo.out"
+        })
+            .from("h1 span", {
+                scale: 1.2,
+                filter: "blur(10px)",
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=0.8")
+            .from(".logo-placeholder", {
+                rotateY: 180,
+                scale: 0,
+                duration: 1.5,
+                ease: "elastic.out(1, 0.5)"
+            }, "-=1");
+
+        // Path Animation Logic
+        const path = document.querySelector("#active-path");
+        const pathLength = path.getTotalLength();
+
+        // Set up the path for "drawing"
+        path.style.strokeDasharray = pathLength;
+        path.style.strokeDashoffset = pathLength;
+
+        // Scroll animation for the path
+        gsap.to(path, {
+            strokeDashoffset: 0,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".timeline-wrapper",
+                start: "top center",
+                end: "bottom center",
+                scrub: 1.5,
+            }
+        });
+
+        // Scanner Beam Animation
+        gsap.to("#scanner-beam", {
+            attr: { y: 3000 },
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".timeline-wrapper",
+                start: "top center",
+                end: "bottom center",
+                scrub: 0.5,
+            }
+        });
+
+        // Animation for labels and year nodes
+        document.querySelectorAll('.year-node').forEach((node, index) => {
+            gsap.from(node, {
+                scale: 0,
+                opacity: 0,
+                duration: 0.6,
+                scrollTrigger: {
+                    trigger: node,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        document.querySelectorAll('.label').forEach((label) => {
+            gsap.to(label, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: label,
+                    start: "top 85%",
+                    onEnter: () => label.classList.add('active'),
+                    onLeaveBack: () => label.classList.remove('active')
+                }
+            });
+        });
+
+        // Popup Functions
+        function openPopup(year, text) {
+            document.getElementById('pop-year').innerText = year;
+            document.getElementById('pop-text').innerText = text;
+            document.getElementById('popup').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on overlay click
+        document.getElementById('overlay').addEventListener('click', closePopup);
+
+        // Countdown Logic
+        const targetDate = new Date("April 30, 2026 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update with animation check
+            updateValue("days", days);
+            updateValue("hours", hours);
+            updateValue("mins", minutes);
+            updateValue("secs", seconds);
+        }
+
+        function updateValue(id, value) {
+            const el = document.getElementById(id);
+            const displayValue = value < 10 ? "0" + value : value;
+            if (el.innerText !== displayValue.toString()) {
+                gsap.fromTo(el, { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 });
+                el.innerText = displayValue;
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+    </script>
+</body>
+
+</html>
