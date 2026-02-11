@@ -688,6 +688,21 @@
             box-shadow: 0 0 30px rgba(243, 144, 29, 0.4);
         }
 
+        .node-60 {
+            background: var(--accent-orange) !important;
+            border-color: var(--accent-orange) !important;
+            border-radius: 50% 50% 10% 50% !important;
+            transform: translate(-50%, -50%) rotate(-135deg);
+            color: var(--bg-color) !important;
+            box-shadow: 0 0 30px var(--accent-orange) !important;
+        }
+
+        .node-60 span {
+            transform: rotate(135deg);
+            display: block;
+            font-size: 1.2rem;
+        }
+
         .rsvp-text {
             font-size: 0.7rem;
             text-transform: lowercase;
@@ -984,10 +999,7 @@
             </div>
 
             <div class="rsvp-container">
-                <div class="rsvp-circle">
-                    <span>RS</span>
-                    <span>VP</span>
-                </div>
+                <div class="rsvp-circle">RSVP</div>
                 <div class="rsvp-text">click to rsvp</div>
             </div>
 
@@ -1207,10 +1219,10 @@
                     </div>
 
                     <!-- 2026 -->
-                    <div class="year-node"
-                        style="top: 95%; background: var(--accent-gold); border-color: var(--accent-gold); color: #000;"
+                    <div class="year-node node-60" style="top: 95%;"
                         onclick="openPopup('2026', 'A moment in time where we come together to share the celebration of sixty years of excellence.')">
-                        60</div>
+                        <span>60</span>
+                    </div>
                 </div>
             </div>
 
