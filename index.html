@@ -13,14 +13,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --bg-color: #051624;
-            --accent-cyan: #00f2ff;
-            --accent-orange: #ff6b00;
-            --accent-gold: #ff9d00;
+            --bg-color: #002B54;
+            --accent-cyan: #008f94;
+            --accent-orange: #F3901D;
+            --accent-gold: #F3901D;
             --text-main: #ffffff;
             --text-dim: rgba(255, 255, 255, 0.7);
-            --line-color: rgba(0, 242, 255, 0.2);
-            --grid-color: rgba(0, 242, 255, 0.05);
+            --line-color: rgba(0, 143, 148, 0.2);
+            --grid-color: rgba(0, 143, 148, 0.05);
         }
 
         * {
@@ -31,7 +31,7 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 20%, #0a2a44 0%, var(--bg-color) 80%);
+            background-image: radial-gradient(circle at 50% 20%, #003a70 0%, var(--bg-color) 80%);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -85,19 +85,19 @@
         .logo-placeholder {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, var(--accent-gold), #ff5e00);
+            background: linear-gradient(135deg, var(--accent-gold), #D67C1A);
             margin: 0 auto 20px;
             border-radius: 50% 50% 10% 50%;
             transform: rotate(-45deg);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 30px rgba(255, 157, 0, 0.4);
+            box-shadow: 0 0 30px rgba(243, 144, 29, 0.4);
         }
 
         .logo-text {
             transform: rotate(45deg);
-            color: #051624;
+            color: #002B54;
             font-weight: 900;
             font-size: 1.2rem;
         }
@@ -189,7 +189,7 @@
             font-size: clamp(0.8rem, 2vw, 1rem);
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 143, 148, 0.15);
             left: 50%;
             /* Back to center */
             transform: translate(-50%, -50%);
@@ -337,12 +337,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: rgba(5, 22, 36, 0.85);
+            background: rgba(0, 43, 84, 0.85);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             padding: clamp(25px, 6vw, 45px);
             border-radius: 28px;
-            border: 1px solid rgba(0, 242, 255, 0.25);
+            border: 1px solid rgba(0, 143, 148, 0.25);
             z-index: 1000;
             max-width: 480px;
             width: 90%;
@@ -408,7 +408,7 @@
 
         .close-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(0, 242, 255, 0.4);
+            box-shadow: 0 10px 20px -5px rgba(0, 143, 148, 0.4);
             filter: brightness(1.1);
         }
 
@@ -416,7 +416,7 @@
         footer {
             text-align: center;
             padding: 100px 0;
-            background: linear-gradient(to top, rgba(0, 242, 255, 0.05), transparent);
+            background: linear-gradient(to top, rgba(0, 143, 148, 0.05), transparent);
         }
 
         .big-60 {
@@ -546,8 +546,8 @@
             width: 100%;
             height: 100%;
             background-image:
-                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 143, 148, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 143, 148, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             pointer-events: none;
             z-index: -1;
@@ -685,7 +685,7 @@
             margin-bottom: 10px;
             margin-left: auto;
             margin-right: auto;
-            box-shadow: 0 0 30px rgba(255, 107, 0, 0.4);
+            box-shadow: 0 0 30px rgba(243, 144, 29, 0.4);
         }
 
         .rsvp-text {
@@ -743,13 +743,13 @@
         }
 
         .view-more-btn:hover {
-            box-shadow: 0 0 25px rgba(255, 107, 0, 0.6);
+            box-shadow: 0 0 25px rgba(243, 144, 29, 0.6);
             transform: translateY(-3px);
-            background: #ff8533;
+            background: #F6A64A;
         }
 
         .view-more-btn:hover {
-            box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+            box-shadow: 0 0 20px rgba(243, 144, 29, 0.5);
             transform: translateY(-2px);
         }
 
@@ -965,15 +965,16 @@
                 </div>
             </div>
             <div class="vitol-logo">
-                <svg viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="75 690 1880 600" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
-                        d="M43.5 15C43.5 15 67 25 67 55C67 71.5685 53.5685 85 37 85C20.4315 85 7 71.5685 7 55C7 45.5 13.5 31.5 18 24.5"
-                        stroke="white" stroke-width="7" stroke-linecap="round" />
+                        d="M278.83 710.45c-.49 48.03-22.1 81.57-55.37 113.39-35.03 33.51-64.06 58.34-88.44 102.1-73.28 131.48 10.77 296.64 159.52 313.79 181.07 20.86 302.17-174.98 202.64-328.6-22.99-35.5-47.51-57.29-77.55-85.64-34.21-32.27-56.68-65.77-57.41-115.04h173.66c.86 0 11.98 5.41 13.49 6.43 10.14 6.87 14.82 18.34 15.81 30.27v488.41c-1.6 20.27-12.51 34.43-33.03 37.96l-425.46-.3c-14.3-3.25-23.8-12.27-28.95-25.85-4.28-166.35-.66-333.5-1.83-500.15-1.33-14.41 16.14-36.77 30.47-36.77H278.8Z"
+                        fill="#ffffff" />
                     <path
-                        d="M37 38C37 38 48 43 48 57C48 64.732 41.732 71 34 71C26.268 71 20 64.732 20 57C20 52.5 24.5 45.5 24.5 45.5"
-                        fill="#ff6b00" />
-                    <text x="85" y="75" fill="white" font-family="'Outfit', sans-serif" font-weight="700"
-                        font-size="65">Vitol</text>
+                        d="M322.39 812.61c3.02 8.48 6.45 16.92 10.58 24.94 40.02 77.84 142.77 124.52 113.01 230.13-41.61 147.65-264.04 110.5-253.08-45.22 5.46-77.61 79.3-116.23 113.55-177.87 5.21-9.38 8.49-20.35 13.23-29.11.45-.83 1.9-3.47 2.72-2.87"
+                        fill="#F3901D" />
+                    <path
+                        d="M1100.45 806.37h98.35v-90.94H990.27l-110.79 399.89-115.15-399.89h-110.8l161.19 554.36 3.69 1.3 120.35-.82 161.69-536.15zm0 464.65h98.34V868.65h-98.34zm347.95-328.86 1.86-1.87v-71.63h-73.45V747.83h-97.71l-1.87 1.87v118.96h-59.76v73.5h59.76l-.06 243.58c3.35 59.53 36.43 84.61 93.98 87.83 25.53 1.43 54 .43 79.11-3.8v-84.71c-18.56 1.93-57.2 8.72-67.9-11.15-2.08-3.84-5.55-16.61-5.55-20.61V942.15h71.59Zm270.75 155.08c-5.88 57.25-32.51 106.15-97.56 100.12-79.83-7.41-84.64-124.96-70.91-183.99 7.7-33.03 31.21-67.6 67.33-72.15 91.43-11.51 108.29 86.3 101.13 156.02m99.59-57.29c-9.65-111.29-85.82-189.35-200.67-182.13-232.26 14.56-229.45 406.85-4.09 421.92 146.93 9.81 216.45-104.89 204.76-239.78m119.52 228.57V715.44h-99.59v554.34l99.59-1.24Z"
+                        fill="#ffffff" />
                 </svg>
             </div>
 
@@ -983,8 +984,18 @@
             </div>
 
             <div class="rsvp-container">
-                <div class="rsvp-circle">RSVP</div>
+                <div class="rsvp-circle">
+                    <span>RS</span>
+                    <span>VP</span>
+                </div>
                 <div class="rsvp-text">click to rsvp</div>
+            </div>
+
+            <div class="scroll-arrow" style="margin-top: 20px; opacity: 0.6;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 13l5 5 5-5m0-7l-5 5-5-5" />
+                </svg>
             </div>
 
             <!-- <div class="scroll-arrow">
@@ -1001,8 +1012,7 @@
                 <div class="info-content">
                     <p><b>William P. Hobby Airport</b></p>
                     <p class="info-dim">(HOU) 10-12 miles from Downtown Houston</p>
-                    <p><b>George Bush Intercontinental Airport (IAH)</b></p>
-                    <p class="info-dim">21 miles from Downtown Houston</p>
+                    <p><b>George Bush Intercontinental Airport (IAH)</b> 21 miles from Downtown Houston</p>
                     <p><i>Ideal arrival window prior to 3:30 p.m. CST</i></p>
                 </div>
 
@@ -1035,6 +1045,13 @@
 
             <div class="footer-support">
                 Still have questions? Contact Guest Support // events@preislerproductions.com
+            </div>
+
+            <div class="scroll-arrow" style="margin-top: 40px; opacity: 0.4;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 13l5 5 5-5" />
+                </svg>
             </div>
         </section>
 
