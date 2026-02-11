@@ -1288,88 +1288,89 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Initial entry animation
+        // Initial header entry animation
         const tl = gsap.timeline();
-        tl.from(".vitol-logo, .header-msg, .rsvp-container", {
+        tl.from(".vitol-logo, .header-msg, .rsvp-container, .scroll-arrow", {
             opacity: 0,
             y: 30,
-            stagger: 0.2,
+            stagger: 0.15,
             duration: 1.2,
             ease: "expo.out"
-        })
-            .from(".rsvp-circle", {
-                scale: 0,
-                duration: 1,
-                ease: "elastic.out(1, 0.5)"
-            }, "-=0.8");
-
-        // Path Animation Logic
-        const path = document.querySelector("#active-path");
-        const pathLength = path.getTotalLength();
-
-        // Set up the path for "drawing"
-        path.style.strokeDasharray = pathLength;
-        path.style.strokeDashoffset = pathLength;
-
-        // Scroll animation for the path
-        gsap.to(path, {
-            strokeDashoffset: 0,
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".timeline-wrapper",
-                start: "top center",
-                end: "bottom center",
-                scrub: 1.5,
-            }
         });
 
-        // Scanner Beam Animation
-        gsap.to("#scanner-beam", {
-            attr: { y: 3000 },
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".timeline-wrapper",
-                start: "top center",
-                end: "bottom center",
-                scrub: 0.5,
-            }
-        });
+        // Robust Animation Loader for Iframe
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
 
-        // Animation for labels and year nodes
-        document.querySelectorAll('.year-node').forEach((node) => {
-            gsap.from(node, {
-                scale: 0,
-                opacity: 0,
-                duration: 0.6,
-                scrollTrigger: {
-                    trigger: node,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse"
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+
+                    if (target.classList.contains('year-node')) {
+                        // Special handling for 60 node to preserve rotation and shape
+                        if (target.classList.contains('node-60')) {
+                            gsap.fromTo(target,
+                                { scale: 0, opacity: 0 },
+                                { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)" }
+                            );
+                        } else {
+                            gsap.fromTo(target,
+                                { scale: 0, opacity: 0 },
+                                { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }
+                            );
+                        }
+                    }
+
+                    if (target.classList.contains('label')) {
+                        target.classList.add('active');
+                    }
+
+                    if (target.id === 'active-path') {
+                        gsap.to(target, { strokeDashoffset: 0, duration: 3, ease: "power2.inOut" });
+                    }
+
+                    // Once animated, stop observing this element
+                    animationObserver.unobserve(target);
                 }
             });
+        }, observerOptions);
+
+        // Initialize Observer for all dynamic elements
+        document.querySelectorAll('.year-node, .label').forEach(el => {
+            // Ensure they start invisible for the reveal animation
+            if (el.classList.contains('year-node')) {
+                gsap.set(el, { scale: 0, opacity: 0 });
+            }
+            animationObserver.observe(el);
         });
 
-        document.querySelectorAll('.label').forEach((label) => {
-            ScrollTrigger.create({
-                trigger: label,
-                start: "top 85%",
-                onEnter: () => label.classList.add('active'),
-                onLeaveBack: () => label.classList.remove('active')
-            });
+        // Setup Path Animation Logic
+        const path = document.querySelector("#active-path");
+        const pathLength = path.getTotalLength();
+        path.style.strokeDasharray = pathLength;
+        path.style.strokeDashoffset = pathLength;
+        animationObserver.observe(path);
+
+        // Scanner Beam fallback for iframe (simplified movement)
+        gsap.to("#scanner-beam", {
+            attr: { y: 3000 },
+            duration: 40,
+            repeat: -1,
+            ease: "none"
         });
 
         // Popup Functions
         function openPopup(year, text, event) {
             const popup = document.getElementById('popup');
             const overlay = document.getElementById('overlay');
-
             document.getElementById('pop-year').innerText = year;
             document.getElementById('pop-text').innerText = text;
-
-            // Positioning for iframe compatibility
             const clickY = event.pageY;
             popup.style.top = clickY + "px";
-
             popup.classList.add('active');
             overlay.classList.add('active');
         }
@@ -1377,25 +1378,19 @@
         function closePopup() {
             document.getElementById('popup').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
-            document.body.style.overflow = 'auto';
         }
 
-        // Close on overlay click
         document.getElementById('overlay').addEventListener('click', closePopup);
 
         // Countdown Logic
         const targetDate = new Date("April 30, 2026 00:00:00").getTime();
-
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            // Update with animation check
             updateValue("days", days);
             updateValue("hours", hours);
             updateValue("mins", minutes);
@@ -1404,6 +1399,7 @@
 
         function updateValue(id, value) {
             const el = document.getElementById(id);
+            if (!el) return;
             const displayValue = value < 10 ? "0" + value : value;
             if (el.innerText !== displayValue.toString()) {
                 gsap.fromTo(el, { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 });
@@ -1413,20 +1409,6 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // Iframe & GSAP Refresh logic
-        window.addEventListener('load', () => {
-            ScrollTrigger.refresh();
-        });
-
-        // Refresh on resize to handle parent container changes
-        window.addEventListener('resize', () => {
-            ScrollTrigger.refresh();
-        });
-
-        // Auto-refresh periodically for dynamic content
-        setTimeout(() => ScrollTrigger.refresh(), 1000);
-
     </script>
 </body>
 
