@@ -36,8 +36,8 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at 50% 20%, #003a70 0%, var(--bg-color) 80%);
+            background: linear-gradient(135deg, #000000 0%, #001a33 50%, #000000 100%);
+            background-attachment: fixed;
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -453,45 +453,77 @@
         }
 
         .big-60 {
-            font-size: 12rem;
-            font-weight: 900;
-            background: linear-gradient(180deg, var(--accent-gold), transparent);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-            margin-bottom: 20px;
-            opacity: 0.2;
+            display: none;
         }
 
         .countdown-boxes {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 40px 0;
+            gap: 10px;
+            margin: 30px 0;
         }
 
         .box {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.1);
+            width: clamp(55px, 12vw, 75px);
+            height: clamp(60px, 14vw, 85px);
+            background: #112C50;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             border-radius: 8px;
-            border-bottom: 3px solid var(--accent-gold);
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glass horizontal line effect */
+        .box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .box-orange {
+            background: #FF8D27 !important;
+        }
+
+        .box-orange::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+            border-bottom-color: rgba(255, 255, 255, 0.25);
         }
 
         .box span {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            position: relative;
         }
 
-        .box label {
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            opacity: 0.5;
+        .box-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .box-label {
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: #fff;
+            opacity: 0.9;
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
 
@@ -623,11 +655,29 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             text-align: center;
-            padding: 100px 20px;
+            padding: 0;
             overflow: hidden;
             /* prevent circuit lines from causing scroll */
+        }
+
+        .hero-section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .content-section {
+            width: 100%;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .circuit-bg {
@@ -728,12 +778,15 @@
             transform: translate(-50%, -50%) rotate(-135deg);
             color: var(--bg-color) !important;
             box-shadow: 0 0 30px var(--accent-orange) !important;
+            width: clamp(70px, 12vw, 95px) !important;
+            height: clamp(70px, 12vw, 95px) !important;
         }
 
         .node-60 span {
             transform: rotate(135deg);
             display: block;
-            font-size: 1.2rem;
+            font-size: 1.6rem !important;
+            font-weight: 900 !important;
         }
 
         .rsvp-text {
@@ -1012,84 +1065,95 @@
                     </svg>
                 </div>
             </div>
-            <div class="vitol-logo">
-                <svg viewBox="75 690 1880 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M278.83 710.45c-.49 48.03-22.1 81.57-55.37 113.39-35.03 33.51-64.06 58.34-88.44 102.1-73.28 131.48 10.77 296.64 159.52 313.79 181.07 20.86 302.17-174.98 202.64-328.6-22.99-35.5-47.51-57.29-77.55-85.64-34.21-32.27-56.68-65.77-57.41-115.04h173.66c.86 0 11.98 5.41 13.49 6.43 10.14 6.87 14.82 18.34 15.81 30.27v488.41c-1.6 20.27-12.51 34.43-33.03 37.96l-425.46-.3c-14.3-3.25-23.8-12.27-28.95-25.85-4.28-166.35-.66-333.5-1.83-500.15-1.33-14.41 16.14-36.77 30.47-36.77H278.8Z"
-                        fill="#ffffff" />
-                    <path
-                        d="M322.39 812.61c3.02 8.48 6.45 16.92 10.58 24.94 40.02 77.84 142.77 124.52 113.01 230.13-41.61 147.65-264.04 110.5-253.08-45.22 5.46-77.61 79.3-116.23 113.55-177.87 5.21-9.38 8.49-20.35 13.23-29.11.45-.83 1.9-3.47 2.72-2.87"
-                        fill="#F3901D" />
-                    <path
-                        d="M1100.45 806.37h98.35v-90.94H990.27l-110.79 399.89-115.15-399.89h-110.8l161.19 554.36 3.69 1.3 120.35-.82 161.69-536.15zm0 464.65h98.34V868.65h-98.34zm347.95-328.86 1.86-1.87v-71.63h-73.45V747.83h-97.71l-1.87 1.87v118.96h-59.76v73.5h59.76l-.06 243.58c3.35 59.53 36.43 84.61 93.98 87.83 25.53 1.43 54 .43 79.11-3.8v-84.71c-18.56 1.93-57.2 8.72-67.9-11.15-2.08-3.84-5.55-16.61-5.55-20.61V942.15h71.59Zm270.75 155.08c-5.88 57.25-32.51 106.15-97.56 100.12-79.83-7.41-84.64-124.96-70.91-183.99 7.7-33.03 31.21-67.6 67.33-72.15 91.43-11.51 108.29 86.3 101.13 156.02m99.59-57.29c-9.65-111.29-85.82-189.35-200.67-182.13-232.26 14.56-229.45 406.85-4.09 421.92 146.93 9.81 216.45-104.89 204.76-239.78m119.52 228.57V715.44h-99.59v554.34l99.59-1.24Z"
-                        fill="#ffffff" />
-                </svg>
+            <div class="hero-section">
+                <div class="vitol-logo">
+                    <svg viewBox="75 690 1880 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M278.83 710.45c-.49 48.03-22.1 81.57-55.37 113.39-35.03 33.51-64.06 58.34-88.44 102.1-73.28 131.48 10.77 296.64 159.52 313.79 181.07 20.86 302.17-174.98 202.64-328.6-22.99-35.5-47.51-57.29-77.55-85.64-34.21-32.27-56.68-65.77-57.41-115.04h173.66c.86 0 11.98 5.41 13.49 6.43 10.14 6.87 14.82 18.34 15.81 30.27v488.41c-1.6 20.27-12.51 34.43-33.03 37.96l-425.46-.3c-14.3-3.25-23.8-12.27-28.95-25.85-4.28-166.35-.66-333.5-1.83-500.15-1.33-14.41 16.14-36.77 30.47-36.77H278.8Z"
+                            fill="#ffffff" />
+                        <path
+                            d="M322.39 812.61c3.02 8.48 6.45 16.92 10.58 24.94 40.02 77.84 142.77 124.52 113.01 230.13-41.61 147.65-264.04 110.5-253.08-45.22 5.46-77.61 79.3-116.23 113.55-177.87 5.21-9.38 8.49-20.35 13.23-29.11.45-.83 1.9-3.47 2.72-2.87"
+                            fill="#F3901D" />
+                        <path
+                            d="M1100.45 806.37h98.35v-90.94H990.27l-110.79 399.89-115.15-399.89h-110.8l161.19 554.36 3.69 1.3 120.35-.82 161.69-536.15zm0 464.65h98.34V868.65h-98.34zm347.95-328.86 1.86-1.87v-71.63h-73.45V747.83h-97.71l-1.87 1.87v118.96h-59.76v73.5h59.76l-.06 243.58c3.35 59.53 36.43 84.61 93.98 87.83 25.53 1.43 54 .43 79.11-3.8v-84.71c-18.56 1.93-57.2 8.72-67.9-11.15-2.08-3.84-5.55-16.61-5.55-20.61V942.15h71.59Zm270.75 155.08c-5.88 57.25-32.51 106.15-97.56 100.12-79.83-7.41-84.64-124.96-70.91-183.99 7.7-33.03 31.21-67.6 67.33-72.15 91.43-11.51 108.29 86.3 101.13 156.02m99.59-57.29c-9.65-111.29-85.82-189.35-200.67-182.13-232.26 14.56-229.45 406.85-4.09 421.92 146.93 9.81 216.45-104.89 204.76-239.78m119.52 228.57V715.44h-99.59v554.34l99.59-1.24Z"
+                            fill="#ffffff" />
+                    </svg>
+                </div>
+
+                <div class="scroll-arrow" style="margin-top: 40px; opacity: 0.6; animation: bounce 2s infinite;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 13l5 5 5-5m0-7l-5 5-5-5" />
+                    </svg>
+                </div>
             </div>
 
-            <div class="header-msg">
-                invites you to celebrate
-                <b>60 Years of Global Energy in Motion</b>
-            </div>
+            <div class="content-section">
+                <div class="header-msg"
+                    style="font-size: clamp(1.2rem, 3.5vw, 2.2rem); font-weight: 300; max-width: 800px; line-height: 1.4; margin-bottom: 40px; color: #fff;">
+                    a moment in time we come together<br>
+                    <b style="font-weight: 600; font-size: 1.1em; display: block; margin-top: 10px;">and share the
+                        celebration</b>
+                </div>
 
-            <div class="rsvp-container">
-                <div class="rsvp-circle">RSVP</div>
-                <div class="rsvp-text">click to rsvp</div>
-            </div>
+                <a href="https://vitolsixty.rsvpify.com/rsvp-page-preview/1229622?signature=38111ba4bf8cc00ba3b7b144ebb2f3005f4abaa25dcaac3fc1e0970cfac9f43c"
+                    target="_blank" style="text-decoration: none; color: inherit; margin-bottom: 60px;">
+                    <div class="rsvp-container">
+                        <div class="rsvp-circle">RSVP</div>
+                        <div class="rsvp-text">click to rsvp</div>
+                    </div>
+                </a>
 
-            <div class="scroll-arrow" style="margin-top: 20px; opacity: 0.6;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M7 13l5 5 5-5m0-7l-5 5-5-5" />
-                </svg>
-            </div>
-
-            <!-- <div class="scroll-arrow">
+                <!-- <div class="scroll-arrow">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
                 </svg>
             </div> -->
 
-            <div class="info-section">
-                <h2 class="info-title">Travel and Stay</h2>
+                <div class="info-section">
+                    <h2 class="info-title">Travel and Stay</h2>
 
-                <h3 class="info-subtitle">Air Travel</h3>
-                <div class="info-content">
-                    <p><b>William P. Hobby Airport</b></p>
-                    <p class="info-dim">(HOU) 10-12 miles from Downtown Houston</p>
-                    <p><b>George Bush Intercontinental Airport (IAH)</b> 21 miles from Downtown Houston</p>
-                    <p><i>Ideal arrival window prior to 3:30 p.m. CST</i></p>
-                </div>
-
-                <h3 class="info-subtitle">Hotel Accommodations</h3>
-                <div class="info-content">
-                    <p><b>The Thompson Hotel</b></p>
-                    <a href="#" class="view-more-btn">View More</a>
-                </div>
-            </div>
-
-            <div class="info-section">
-                <h2 class="info-title">FAQ</h2>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <h4>Guest Policy</h4>
-                        <p>We look forward to hosting you. Please note that this invitation admits the named guest and
-                            is non-transferable.</p>
+                    <h3 class="info-subtitle">Air Travel</h3>
+                    <div class="info-content">
+                        <p><b>William P. Hobby Airport</b></p>
+                        <p class="info-dim">(HOU) 10-12 miles from Downtown Houston</p>
+                        <p><b>George Bush Intercontinental Airport (IAH)</b> 21 miles from Downtown Houston</p>
+                        <p><i>Ideal arrival window prior to 3:30 p.m. CST</i></p>
                     </div>
-                    <div class="faq-item">
-                        <h4>Photography Rules</h4>
-                        <p>Out of respect for our guests and performers, we kindly ask that no photos or video be taken
-                            during the event.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4>Dress Code</h4>
-                        <p>Business Attire</p>
+
+                    <h3 class="info-subtitle">Hotel Accommodations</h3>
+                    <div class="info-content">
+                        <p><b>The Thompson Hotel</b></p>
+                        <a href="#" class="view-more-btn">View More</a>
                     </div>
                 </div>
-            </div>
 
-            <div class="footer-support">
-                Still have questions? Contact Guest Support // events@preislerproductions.com
+                <div class="info-section">
+                    <h2 class="info-title">FAQ</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h4>Guest Policy</h4>
+                            <p>We look forward to hosting you. Please note that this invitation admits the named guest
+                                and
+                                is non-transferable.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Photography Rules</h4>
+                            <p>Out of respect for our guests and performers, we kindly ask that no photos or video be
+                                taken
+                                during the event.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Dress Code</h4>
+                            <p>Business Attire</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-support">
+                    Still have questions? Contact Guest Support // events@preislerproductions.com
+                </div>
             </div>
 
             <div class="scroll-arrow" style="margin-top: 40px; opacity: 0.4;">
@@ -1149,17 +1213,23 @@
                         </g>
 
                         <!-- Branch links (Curved) -->
-                        <path id="b1966" class="timeline-line tech-line" d="M500,400 Q700,400 700,450" />
-                        <path id="b1975" class="timeline-line tech-line" d="M500,800 Q300,800 300,850" />
-                        <path id="b1985" class="timeline-line tech-line" d="M500,1200 Q700,1200 700,1250" />
-                        <path id="b1995" class="timeline-line tech-line" d="M500,1600 Q300,1600 300,1650" />
-                        <path id="b2005" class="timeline-line tech-line" d="M500,2000 Q700,2000 700,2050" />
-                        <path id="b2015" class="timeline-line tech-line" d="M500,2400 Q300,2400 300,2450" />
+                        <path id="b1966" class="timeline-line tech-line" d="M500,200 Q700,200 700,230" />
+                        <path id="b1975" class="timeline-line tech-line" d="M500,400 Q300,400 300,430" />
+                        <path id="b1980" class="timeline-line tech-line" d="M500,600 Q700,600 700,630" />
+                        <path id="b1983" class="timeline-line tech-line" d="M500,800 Q300,800 300,830" />
+                        <path id="b1985" class="timeline-line tech-line" d="M500,1000 Q700,1000 700,1030" />
+                        <path id="b1990" class="timeline-line tech-line" d="M500,1200 Q300,1200 300,1230" />
+                        <path id="b1995" class="timeline-line tech-line" d="M500,1400 Q700,1400 700,1430" />
+                        <path id="b2000" class="timeline-line tech-line" d="M500,1600 Q300,1600 300,1630" />
+                        <path id="b2005" class="timeline-line tech-line" d="M500,1800 Q700,1800 700,1830" />
+                        <path id="b2010" class="timeline-line tech-line" d="M500,2000 Q300,2000 300,2030" />
+                        <path id="b2015" class="timeline-line tech-line" d="M500,2200 Q700,2200 700,2230" />
+                        <path id="b2020" class="timeline-line tech-line" d="M500,2400 Q300,2400 300,2430" />
                         <path class="timeline-line pulse-glow" d="M500,2800 L500,2850" />
 
                         <!-- Active Growing Line (Curved Branches) -->
                         <path id="active-path" class="timeline-line-active"
-                            d="M500,0 L500,400 Q700,400 700,450 M500,400 L500,800 Q300,800 300,850 M500,800 L500,1200 Q700,1200 700,1250 M500,1200 L500,1600 Q300,1600 300,1650 M500,1600 L500,2000 Q700,2000 700,2050 M500,2000 L500,2400 Q300,2400 300,2450 M500,2400 L500,2850" />
+                            d="M500,0 L500,200 Q700,200 700,230 M500,200 L500,400 Q300,400 300,430 M500,400 L500,600 Q700,600 700,630 M500,600 L500,800 Q300,800 300,830 M500,800 L500,1000 Q700,1000 700,1030 M500,1000 L500,1200 Q300,1200 300,1230 M500,1200 L500,1400 Q700,1400 700,1430 M500,1400 L500,1600 Q300,1600 300,1630 M500,1600 L500,1800 Q700,1800 700,1830 M500,1800 L500,2000 Q300,2000 300,2030 M500,2000 L500,2200 Q700,2200 700,2230 M500,2200 L500,2400 Q300,2400 300,2430 M500,2400 L500,2850" />
 
                         <!-- Traveling Packets -->
                         <circle class="packet" r="4" cx="0" cy="0">
@@ -1198,57 +1268,111 @@
 
                 <div class="timeline-content">
                     <!-- 1966 (Right) -->
-                    <div class="year-node" style="top: 13.33%;"
+                    <div class="year-node" style="top: 7.67%;"
                         onclick="openPopup('1966', 'Barge trading begins. Vitol established its roots in Rotterdam, focusing on oil product shipments.', event)">
                         1966</div>
-                    <div class="label label-r" style="top: 15%;">
+                    <div class="label label-r" style="top: 7.67%;">
                         <b>Barge Trading</b>
                         First operations launched in the heart of Europe.
                     </div>
 
                     <!-- 1975 (Left) -->
-                    <div class="year-node" style="top: 26.67%;"
-                        onclick="openPopup('1975', 'Geographic expansion and product trading surge. Expansion into new markets and diversifying the portfolio.', event)">
+                    <div class="year-node" style="top: 14.33%;"
+                        onclick="openPopup('1975', 'Direct product trading launched, marking a major shift in our global operations.', event)">
                         1975</div>
-                    <div class="label label-l" style="top: 28.33%;">
+                    <div class="label label-l" style="top: 14.33%;">
                         <b>Product Trading</b>
-                        Geographic expansion across continents.
+                        Global expansion of trading segments.
+                    </div>
+
+                    <!-- 1980 (Right) -->
+                    <div class="year-node" style="top: 21%;"
+                        onclick="openPopup('1980', 'Opening new offices across key global hubs to ensure local expertise and presence.', event)">
+                        1980</div>
+                    <div class="label label-r" style="top: 21%;">
+                        <b>Geographic Expansion</b>
+                        Opening of Vitol offices globally.
+                    </div>
+
+                    <!-- 1983 (Left) -->
+                    <div class="year-node" style="top: 27.67%;"
+                        onclick="openPopup('1983', 'Strategic storage and terminal lease agreements to secure the supply chain.', event)">
+                        1983</div>
+                    <div class="label label-l" style="top: 27.67%;">
+                        <b>Storage/Terminal Lease</b>
+                        Infrastructure-backed trading strategies.
                     </div>
 
                     <!-- 1985 (Right) -->
-                    <div class="year-node" style="top: 40%;"
-                        onclick="openPopup('1985', 'Strategic investments in storage and terminal assets to secure the supply chain.', event)">
+                    <div class="year-node" style="top: 34.33%;"
+                        onclick="openPopup('1985', 'Crude processing deals marked our entry into more complex value chain management.', event)">
                         1985</div>
-                    <div class="label label-r" style="top: 41.67%;">
-                        <b>Refining Investments</b>
-                        Moving downstream for better integration.
+                    <div class="label label-r" style="top: 34.33%;">
+                        <b>Crude Processing Deals</b>
+                        Diversification into refining capacity.
                     </div>
 
-                    <!-- 1995 (Left) -->
-                    <div class="year-node" style="top: 53.33%;"
-                        onclick="openPopup('1995', 'Exploration and production activities take center stage, defining a new era of energy.', event)">
+                    <!-- 1990 (Left) -->
+                    <div class="year-node" style="top: 41%;"
+                        onclick="openPopup('1990', 'Crude trading becomes a dominant sector in our portfolio.', event)">
+                        1990</div>
+                    <div class="label label-l" style="top: 41%;">
+                        <b>Crude Trading</b>
+                        Scaling global crude oil movements.
+                    </div>
+
+                    <!-- 1995 (Right) -->
+                    <div class="year-node" style="top: 47.67%;"
+                        onclick="openPopup('1995', 'Significant refining investments to strengthen our global assets.', event)">
                         1995</div>
-                    <div class="label label-l" style="top: 55%;">
+                    <div class="label label-r" style="top: 47.67%;">
+                        <b>Refining Investments</b>
+                        Acquiring and optimizing global refineries.
+                    </div>
+
+                    <!-- 2000 (Left) -->
+                    <div class="year-node" style="top: 54.33%;"
+                        onclick="openPopup('2000', 'Exploration and production activities take center stage, defining a new era of energy.', event)">
+                        2000</div>
+                    <div class="label label-l" style="top: 54.33%;">
                         <b>Exploration & Production</b>
-                        Developing upstream capabilities globally.
+                        Developing upstream capabilities.
                     </div>
 
                     <!-- 2005 (Right) -->
-                    <div class="year-node" style="top: 66.67%;"
-                        onclick="openPopup('2005', 'Entering the utilities sector. Providing energy solutions beyond just liquid fuels.', event)">
+                    <div class="year-node" style="top: 61%;"
+                        onclick="openPopup('2005', 'Strategic investments in storage and terminal assets to secure the supply chain.', event)">
                         2005</div>
-                    <div class="label label-r" style="top: 68.33%;">
-                        <b>Utilities & Power</b>
-                        Diversifying into the power and utility grid.
+                    <div class="label label-r" style="top: 61%;">
+                        <b>Terminals</b>
+                        VTTI established as a global terminals player.
                     </div>
 
-                    <!-- 2015 (Left) -->
-                    <div class="year-node" style="top: 80%;"
-                        onclick="openPopup('2015', 'Retail expansion and sustainable energy initiatives begin to shape the future.', event)">
+                    <!-- 2010 (Left) -->
+                    <div class="year-node" style="top: 67.67%;"
+                        onclick="openPopup('2010', 'Entering the utilities sector. Providing energy solutions beyond just liquid fuels.', event)">
+                        2010</div>
+                    <div class="label label-l" style="top: 67.67%;">
+                        <b>Utilities</b>
+                        Diversifying into power and gas utility networks.
+                    </div>
+
+                    <!-- 2015 (Right) -->
+                    <div class="year-node" style="top: 74.33%;"
+                        onclick="openPopup('2015', 'Retail expansion across key markets, bringing Vitol closer to the end consumer.', event)">
                         2015</div>
-                    <div class="label label-l" style="top: 81.67%;">
-                        <b>Retail & Renewables</b>
-                        Reaching end-consumers and focusing on sustainability.
+                    <div class="label label-r" style="top: 74.33%;">
+                        <b>Retail</b>
+                        Global footprint of retail fuel service stations.
+                    </div>
+
+                    <!-- 2020 (Left) -->
+                    <div class="year-node" style="top: 81%;"
+                        onclick="openPopup('2020', 'Pioneering work in Renewables, Biogas, Mobility, Ags, and Metals for a sustainable future.', event)">
+                        2020</div>
+                    <div class="label label-l" style="top: 81%;">
+                        <b>Future Energy</b>
+                        Renewables, Biogas, Mobility & Ags.
                     </div>
 
                     <!-- 2026 -->
@@ -1260,26 +1384,44 @@
             </div>
 
             <footer>
-                <div class="big-60"
-                    style="background: linear-gradient(180deg, var(--accent-orange), transparent); -webkit-background-clip: text; background-clip: text;">
-                    60</div>
-                <h2>A moment in time</h2>
-                <p>we come together and share the celebration</p>
-
-                <div class="countdown-boxes">
-                    <div class="box"><span id="days">00</span><label>Days</label></div>
-                    <div class="box"><span id="hours">00</span><label>Hours</label></div>
-                    <div class="box"
-                        style="background: var(--accent-orange); color: #000; border-bottom-color: var(--accent-orange);">
-                        <span id="mins">00</span><label>Mins</label>
-                    </div>
-                    <div class="box"
-                        style="background: var(--accent-orange); color: #000; border-bottom-color: var(--accent-orange);">
-                        <span id="secs">00</span><label>Secs</label>
-                    </div>
+                <div class="footer-date"
+                    style="color: #f3901d; font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; margin-bottom: 5px; line-height: 1.1;">
+                    April 30, 2026
+                </div>
+                <div class="footer-msg"
+                    style="font-size: clamp(1.2rem, 3.5vw, 2.2rem); font-weight: 600; color: #fff; margin-bottom: 40px; line-height: 1.3;">
+                    a moment in time we come together<br>and share the celebration
                 </div>
 
-                <p style="opacity: 0.5;">Thursday, April 30, 2026</p>
+                <h3 style="font-weight: 400; margin-bottom: 25px; opacity: 0.9; font-size: 1.2rem;">it’s almost time
+                </h3>
+
+                <div class="countdown-boxes">
+                    <div class="box-container">
+                        <div class="box">
+                            <span id="days">00</span>
+                        </div>
+                        <div class="box-label">days</div>
+                    </div>
+                    <div class="box-container">
+                        <div class="box">
+                            <span id="hours">00</span>
+                        </div>
+                        <div class="box-label">hours</div>
+                    </div>
+                    <div class="box-container">
+                        <div class="box box-orange">
+                            <span id="mins">00</span>
+                        </div>
+                        <div class="box-label">minutes</div>
+                    </div>
+                    <div class="box-container" style="perspective: 1000px;">
+                        <div class="box box-orange">
+                            <span id="secs">00</span>
+                        </div>
+                        <div class="box-label">seconds</div>
+                    </div>
+                </div>
             </footer>
         </section>
     </div>
@@ -1402,8 +1544,16 @@
             if (!el) return;
             const displayValue = value < 10 ? "0" + value : value;
             if (el.innerText !== displayValue.toString()) {
-                gsap.fromTo(el, { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 });
-                el.innerText = displayValue;
+                if (id === 'secs') {
+                    // Animation ONLY for seconds
+                    gsap.timeline()
+                        .to(el, { y: 10, opacity: 0, scale: 0.8, duration: 0.25, ease: "power2.in" })
+                        .set(el, { innerText: displayValue, y: -15 })
+                        .to(el, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" });
+                } else {
+                    // Instant update for others
+                    el.innerText = displayValue;
+                }
             }
         }
 
