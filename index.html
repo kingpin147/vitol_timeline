@@ -367,24 +367,23 @@
 
         /* Popup Styles - Premium Glassmorphism */
         .popup {
-            position: fixed;
-            top: 50%;
+            position: absolute;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: rgba(0, 43, 84, 0.85);
+            background: rgba(0, 43, 84, 0.95);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             padding: clamp(25px, 6vw, 45px);
             border-radius: 28px;
             border: 1px solid rgba(0, 143, 148, 0.25);
-            z-index: 1000;
+            z-index: 2000;
             max-width: 480px;
             width: 90%;
             opacity: 0;
             pointer-events: none;
             text-align: center;
             transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
         }
 
         .popup.active {
@@ -409,13 +408,13 @@
         }
 
         .overlay {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.85);
-            z-index: 999;
+            z-index: 1999;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease;
@@ -1200,7 +1199,7 @@
                 <div class="timeline-content">
                     <!-- 1966 (Right) -->
                     <div class="year-node" style="top: 13.33%;"
-                        onclick="openPopup('1966', 'Barge trading begins. Vitol established its roots in Rotterdam, focusing on oil product shipments.')">
+                        onclick="openPopup('1966', 'Barge trading begins. Vitol established its roots in Rotterdam, focusing on oil product shipments.', event)">
                         1966</div>
                     <div class="label label-r" style="top: 15%;">
                         <b>Barge Trading</b>
@@ -1209,7 +1208,7 @@
 
                     <!-- 1975 (Left) -->
                     <div class="year-node" style="top: 26.67%;"
-                        onclick="openPopup('1975', 'Geographic expansion and product trading surge. Expansion into new markets and diversifying the portfolio.')">
+                        onclick="openPopup('1975', 'Geographic expansion and product trading surge. Expansion into new markets and diversifying the portfolio.', event)">
                         1975</div>
                     <div class="label label-l" style="top: 28.33%;">
                         <b>Product Trading</b>
@@ -1218,7 +1217,7 @@
 
                     <!-- 1985 (Right) -->
                     <div class="year-node" style="top: 40%;"
-                        onclick="openPopup('1985', 'Strategic investments in storage and terminal assets to secure the supply chain.')">
+                        onclick="openPopup('1985', 'Strategic investments in storage and terminal assets to secure the supply chain.', event)">
                         1985</div>
                     <div class="label label-r" style="top: 41.67%;">
                         <b>Refining Investments</b>
@@ -1227,7 +1226,7 @@
 
                     <!-- 1995 (Left) -->
                     <div class="year-node" style="top: 53.33%;"
-                        onclick="openPopup('1995', 'Exploration and production activities take center stage, defining a new era of energy.')">
+                        onclick="openPopup('1995', 'Exploration and production activities take center stage, defining a new era of energy.', event)">
                         1995</div>
                     <div class="label label-l" style="top: 55%;">
                         <b>Exploration & Production</b>
@@ -1236,7 +1235,7 @@
 
                     <!-- 2005 (Right) -->
                     <div class="year-node" style="top: 66.67%;"
-                        onclick="openPopup('2005', 'Entering the utilities sector. Providing energy solutions beyond just liquid fuels.')">
+                        onclick="openPopup('2005', 'Entering the utilities sector. Providing energy solutions beyond just liquid fuels.', event)">
                         2005</div>
                     <div class="label label-r" style="top: 68.33%;">
                         <b>Utilities & Power</b>
@@ -1245,7 +1244,7 @@
 
                     <!-- 2015 (Left) -->
                     <div class="year-node" style="top: 80%;"
-                        onclick="openPopup('2015', 'Retail expansion and sustainable energy initiatives begin to shape the future.')">
+                        onclick="openPopup('2015', 'Retail expansion and sustainable energy initiatives begin to shape the future.', event)">
                         2015</div>
                     <div class="label label-l" style="top: 81.67%;">
                         <b>Retail & Renewables</b>
@@ -1254,7 +1253,7 @@
 
                     <!-- 2026 -->
                     <div class="year-node node-60" style="top: 95%;"
-                        onclick="openPopup('2026', 'A moment in time where we come together to share the celebration of sixty years of excellence.')">
+                        onclick="openPopup('2026', 'A moment in time where we come together to share the celebration of sixty years of excellence.', event)">
                         <span>60</span>
                     </div>
                 </div>
@@ -1360,12 +1359,19 @@
         });
 
         // Popup Functions
-        function openPopup(year, text) {
+        function openPopup(year, text, event) {
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+
             document.getElementById('pop-year').innerText = year;
             document.getElementById('pop-text').innerText = text;
-            document.getElementById('popup').classList.add('active');
-            document.getElementById('overlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
+
+            // Positioning for iframe compatibility
+            const clickY = event.pageY;
+            popup.style.top = clickY + "px";
+
+            popup.classList.add('active');
+            overlay.classList.add('active');
         }
 
         function closePopup() {
