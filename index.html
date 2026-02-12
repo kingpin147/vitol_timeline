@@ -665,6 +665,8 @@
         .hero-section {
             width: 100%;
             height: 100vh;
+            max-height: 1080px;
+            min-height: 700px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -934,138 +936,138 @@
     <div class="container">
         <!-- Section 1: The Design from Image -->
         <section id="section-1">
-            <div class="circuit-bg">
-                <!-- LEFT SIDE: Orange Stepped Lines Pattern -->
-                <div class="circuit-left">
-                    <svg width="100%" height="100%" viewBox="0 0 300 1000" preserveAspectRatio="xMinYMin slice">
-                        <defs>
-                            <filter id="glow-orange">
-                                <feGaussianBlur stdDeviation="1.5" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-                        <!-- LEFT PATTERN: 26 Line Segments forming stepped vertical paths -->
-                        <g stroke="var(--accent-orange)" stroke-width="1.2" fill="none" opacity="0.4"
-                            filter="url(#glow-orange)" stroke-linecap="square">
-                            <!-- Stepped Path 1 -->
-                            <path d="M20,0 L20,120" class="tech-line" />
-                            <path d="M20,120 L60,120" class="tech-line" />
-                            <path d="M60,120 L60,280" class="tech-line" />
-                            <path d="M60,280 L100,280" class="tech-line" />
-                            <path d="M100,280 L100,450" class="tech-line" />
-                            <path d="M100,450 L140,450" class="tech-line" />
-                            <path d="M140,450 L140,650" class="tech-line" />
-                            <path d="M140,650 L180,650" class="tech-line" />
-                            <path d="M180,650 L180,900" class="tech-line" />
-
-                            <!-- Stepped Path 2 -->
-                            <path d="M80,50 L80,180" class="tech-line" />
-                            <path d="M80,180 L40,180" class="tech-line" />
-                            <path d="M40,180 L40,350" class="tech-line" />
-                            <path d="M40,350 L80,350" class="tech-line" />
-                            <path d="M80,350 L80,520" class="tech-line" />
-                            <path d="M80,520 L120,520" class="tech-line" />
-                            <path d="M120,520 L120,720" class="tech-line" />
-                            <path d="M120,720 L160,720" class="tech-line" />
-                            <path d="M160,720 L160,950" class="tech-line" />
-
-                            <!-- Additional segments -->
-                            <path d="M140,30 L140,200" class="tech-line" />
-                            <path d="M140,200 L100,200" class="tech-line" />
-                            <path d="M180,380 L180,580" class="tech-line" />
-                            <path d="M180,580 L140,580" class="tech-line" />
-                            <path d="M200,100 L200,420" class="tech-line" />
-                            <path d="M200,420 L240,420" class="tech-line" />
-                            <path d="M220,550 L220,800" class="tech-line" />
-                            <path d="M50,750 L90,750" class="tech-line" />
-                        </g>
-                        <!-- Animated particles on left -->
-                        <g fill="var(--accent-orange)" filter="url(#glow-orange)">
-                            <circle r="2.5" opacity="0.7">
-                                <animateMotion dur="8s" repeatCount="indefinite"
-                                    path="M20,0 L20,120 L60,120 L60,280 L100,280 L100,450 L140,450 L140,650 L180,650 L180,900" />
-                            </circle>
-                            <circle r="2" opacity="0.6">
-                                <animateMotion dur="10s" repeatCount="indefinite"
-                                    path="M80,50 L80,180 L40,180 L40,350 L80,350 L80,520 L120,520 L120,720 L160,720 L160,950" />
-                            </circle>
-                            <circle r="2.5" opacity="0.8">
-                                <animateMotion dur="9s" repeatCount="indefinite"
-                                    path="M140,30 L140,200 L100,200 L180,380 L180,580 L140,580" />
-                            </circle>
-                        </g>
-                    </svg>
-                </div>
-
-                <!-- RIGHT SIDE: Orange Stepped Lines Pattern (Mirrored) -->
-                <div class="circuit-right">
-                    <svg width="100%" height="100%" viewBox="0 0 300 1000" preserveAspectRatio="xMaxYMin slice">
-                        <defs>
-                            <filter id="glow-orange-right">
-                                <feGaussianBlur stdDeviation="1.5" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
-                        </defs>
-                        <!-- RIGHT PATTERN: 26 Line Segments (mirrored) -->
-                        <g stroke="var(--accent-orange)" stroke-width="1.2" fill="none" opacity="0.4"
-                            filter="url(#glow-orange-right)" stroke-linecap="square">
-                            <!-- Stepped Path 1 (mirrored) -->
-                            <path d="M280,0 L280,120" class="tech-line" />
-                            <path d="M280,120 L240,120" class="tech-line" />
-                            <path d="M240,120 L240,280" class="tech-line" />
-                            <path d="M240,280 L200,280" class="tech-line" />
-                            <path d="M200,280 L200,450" class="tech-line" />
-                            <path d="M200,450 L160,450" class="tech-line" />
-                            <path d="M160,450 L160,650" class="tech-line" />
-                            <path d="M160,650 L120,650" class="tech-line" />
-                            <path d="M120,650 L120,900" class="tech-line" />
-
-                            <!-- Stepped Path 2 (mirrored) -->
-                            <path d="M220,50 L220,180" class="tech-line" />
-                            <path d="M220,180 L260,180" class="tech-line" />
-                            <path d="M260,180 L260,350" class="tech-line" />
-                            <path d="M260,350 L220,350" class="tech-line" />
-                            <path d="M220,350 L220,520" class="tech-line" />
-                            <path d="M220,520 L180,520" class="tech-line" />
-                            <path d="M180,520 L180,720" class="tech-line" />
-                            <path d="M180,720 L140,720" class="tech-line" />
-                            <path d="M140,720 L140,950" class="tech-line" />
-
-                            <!-- Additional segments (mirrored) -->
-                            <path d="M160,30 L160,200" class="tech-line" />
-                            <path d="M160,200 L200,200" class="tech-line" />
-                            <path d="M120,380 L120,580" class="tech-line" />
-                            <path d="M120,580 L160,580" class="tech-line" />
-                            <path d="M100,100 L100,420" class="tech-line" />
-                            <path d="M100,420 L60,420" class="tech-line" />
-                            <path d="M80,550 L80,800" class="tech-line" />
-                            <path d="M210,750 L250,750" class="tech-line" />
-                        </g>
-                        <!-- Animated particles on right -->
-                        <g fill="var(--accent-orange)" filter="url(#glow-orange-right)">
-                            <circle r="2.5" opacity="0.7">
-                                <animateMotion dur="9s" repeatCount="indefinite"
-                                    path="M280,0 L280,120 L240,120 L240,280 L200,280 L200,450 L160,450 L160,650 L120,650 L120,900" />
-                            </circle>
-                            <circle r="2" opacity="0.6">
-                                <animateMotion dur="11s" repeatCount="indefinite"
-                                    path="M220,50 L220,180 L260,180 L260,350 L220,350 L220,520 L180,520 L180,720 L140,720 L140,950" />
-                            </circle>
-                            <circle r="2.5" opacity="0.8">
-                                <animateMotion dur="10s" repeatCount="indefinite"
-                                    path="M160,30 L160,200 L200,200 L120,380 L120,580 L160,580" />
-                            </circle>
-                        </g>
-                    </svg>
-                </div>
-            </div>
             <div class="hero-section">
+                <div class="circuit-bg">
+                    <!-- LEFT SIDE: Orange Stepped Lines Pattern -->
+                    <div class="circuit-left">
+                        <svg width="100%" height="100%" viewBox="0 0 300 1000" preserveAspectRatio="xMinYMin slice">
+                            <defs>
+                                <filter id="glow-orange">
+                                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- LEFT PATTERN: 26 Line Segments forming stepped vertical paths -->
+                            <g stroke="var(--accent-orange)" stroke-width="1.2" fill="none" opacity="0.4"
+                                filter="url(#glow-orange)" stroke-linecap="square">
+                                <!-- Stepped Path 1 -->
+                                <path d="M20,0 L20,120" class="tech-line" />
+                                <path d="M20,120 L60,120" class="tech-line" />
+                                <path d="M60,120 L60,280" class="tech-line" />
+                                <path d="M60,280 L100,280" class="tech-line" />
+                                <path d="M100,280 L100,450" class="tech-line" />
+                                <path d="M100,450 L140,450" class="tech-line" />
+                                <path d="M140,450 L140,650" class="tech-line" />
+                                <path d="M140,650 L180,650" class="tech-line" />
+                                <path d="M180,650 L180,900" class="tech-line" />
+
+                                <!-- Stepped Path 2 -->
+                                <path d="M80,50 L80,180" class="tech-line" />
+                                <path d="M80,180 L40,180" class="tech-line" />
+                                <path d="M40,180 L40,350" class="tech-line" />
+                                <path d="M40,350 L80,350" class="tech-line" />
+                                <path d="M80,350 L80,520" class="tech-line" />
+                                <path d="M80,520 L120,520" class="tech-line" />
+                                <path d="M120,520 L120,720" class="tech-line" />
+                                <path d="M120,720 L160,720" class="tech-line" />
+                                <path d="M160,720 L160,950" class="tech-line" />
+
+                                <!-- Additional segments -->
+                                <path d="M140,30 L140,200" class="tech-line" />
+                                <path d="M140,200 L100,200" class="tech-line" />
+                                <path d="M180,380 L180,580" class="tech-line" />
+                                <path d="M180,580 L140,580" class="tech-line" />
+                                <path d="M200,100 L200,420" class="tech-line" />
+                                <path d="M200,420 L240,420" class="tech-line" />
+                                <path d="M220,550 L220,800" class="tech-line" />
+                                <path d="M50,750 L90,750" class="tech-line" />
+                            </g>
+                            <!-- Animated particles on left -->
+                            <g fill="var(--accent-orange)" filter="url(#glow-orange)">
+                                <circle r="2.5" opacity="0.7">
+                                    <animateMotion dur="8s" repeatCount="indefinite"
+                                        path="M20,0 L20,120 L60,120 L60,280 L100,280 L100,450 L140,450 L140,650 L180,650 L180,900" />
+                                </circle>
+                                <circle r="2" opacity="0.6">
+                                    <animateMotion dur="10s" repeatCount="indefinite"
+                                        path="M80,50 L80,180 L40,180 L40,350 L80,350 L80,520 L120,520 L120,720 L160,720 L160,950" />
+                                </circle>
+                                <circle r="2.5" opacity="0.8">
+                                    <animateMotion dur="9s" repeatCount="indefinite"
+                                        path="M140,30 L140,200 L100,200 L180,380 L180,580 L140,580" />
+                                </circle>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- RIGHT SIDE: Orange Stepped Lines Pattern (Mirrored) -->
+                    <div class="circuit-right">
+                        <svg width="100%" height="100%" viewBox="0 0 300 1000" preserveAspectRatio="xMaxYMin slice">
+                            <defs>
+                                <filter id="glow-orange-right">
+                                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- RIGHT PATTERN: 26 Line Segments (mirrored) -->
+                            <g stroke="var(--accent-orange)" stroke-width="1.2" fill="none" opacity="0.4"
+                                filter="url(#glow-orange-right)" stroke-linecap="square">
+                                <!-- Stepped Path 1 (mirrored) -->
+                                <path d="M280,0 L280,120" class="tech-line" />
+                                <path d="M280,120 L240,120" class="tech-line" />
+                                <path d="M240,120 L240,280" class="tech-line" />
+                                <path d="M240,280 L200,280" class="tech-line" />
+                                <path d="M200,280 L200,450" class="tech-line" />
+                                <path d="M200,450 L160,450" class="tech-line" />
+                                <path d="M160,450 L160,650" class="tech-line" />
+                                <path d="M160,650 L120,650" class="tech-line" />
+                                <path d="M120,650 L120,900" class="tech-line" />
+
+                                <!-- Stepped Path 2 (mirrored) -->
+                                <path d="M220,50 L220,180" class="tech-line" />
+                                <path d="M220,180 L260,180" class="tech-line" />
+                                <path d="M260,180 L260,350" class="tech-line" />
+                                <path d="M260,350 L220,350" class="tech-line" />
+                                <path d="M220,350 L220,520" class="tech-line" />
+                                <path d="M220,520 L180,520" class="tech-line" />
+                                <path d="M180,520 L180,720" class="tech-line" />
+                                <path d="M180,720 L140,720" class="tech-line" />
+                                <path d="M140,720 L140,950" class="tech-line" />
+
+                                <!-- Additional segments (mirrored) -->
+                                <path d="M160,30 L160,200" class="tech-line" />
+                                <path d="M160,200 L200,200" class="tech-line" />
+                                <path d="M120,380 L120,580" class="tech-line" />
+                                <path d="M120,580 L160,580" class="tech-line" />
+                                <path d="M100,100 L100,420" class="tech-line" />
+                                <path d="M100,420 L60,420" class="tech-line" />
+                                <path d="M80,550 L80,800" class="tech-line" />
+                                <path d="M210,750 L250,750" class="tech-line" />
+                            </g>
+                            <!-- Animated particles on right -->
+                            <g fill="var(--accent-orange)" filter="url(#glow-orange-right)">
+                                <circle r="2.5" opacity="0.7">
+                                    <animateMotion dur="9s" repeatCount="indefinite"
+                                        path="M280,0 L280,120 L240,120 L240,280 L200,280 L200,450 L160,450 L160,650 L120,650 L120,900" />
+                                </circle>
+                                <circle r="2" opacity="0.6">
+                                    <animateMotion dur="11s" repeatCount="indefinite"
+                                        path="M220,50 L220,180 L260,180 L260,350 L220,350 L220,520 L180,520 L180,720 L140,720 L140,950" />
+                                </circle>
+                                <circle r="2.5" opacity="0.8">
+                                    <animateMotion dur="10s" repeatCount="indefinite"
+                                        path="M160,30 L160,200 L200,200 L120,380 L120,580 L160,580" />
+                                </circle>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
                 <div class="vitol-logo">
                     <svg viewBox="75 690 1880 600" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
