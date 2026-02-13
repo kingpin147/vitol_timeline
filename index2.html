@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitol | Background Only</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Outfit:wght@300;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #002B54;
+            --accent-cyan: #008f94;
+            --accent-orange: #F3901D;
+            --accent-gold: #F3901D;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.7);
+            --line-color: rgba(0, 143, 148, 0.2);
+            --grid-color: rgba(0, 143, 148, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: auto;
+            min-height: 100%;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000 0%, #001a33 50%, #000000 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            overscroll-behavior-y: none;
+        }
+
+        /* Premium Noise Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 clamp(10px, 5vw, 20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        section {
+            width: 100%;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            padding: 80px 0;
+        }
+
+        /* Timeline Section Styles (Background Only) */
+        .timeline-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Force exact 1:3 aspect ratio to match SVG viewBox (1000x3000) */
+            aspect-ratio: 1000 / 3000;
+        }
+
+        @supports not (aspect-ratio: 1 / 1) {
+            .timeline-wrapper {
+                padding-top: 300%;
+            }
+        }
+
+        .svg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #main-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        #section-2 {
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center top;
+        }
+
+        .timeline-line {
+            fill: none;
+            stroke: var(--line-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+
+        /* Footer Section */
+        footer {
+            text-align: center;
+            padding: 100px 0;
+            background: linear-gradient(to top, rgba(0, 143, 148, 0.05), transparent);
+            width: 100%;
+        }
+
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .box {
+            width: clamp(55px, 12vw, 75px);
+            height: clamp(60px, 14vw, 85px);
+            background: #112C50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glass horizontal line effect */
+        .box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .box-orange {
+            background: #FF8D27 !important;
+        }
+
+        .box-orange::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+            border-bottom-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .box span {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .box-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .box-label {
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            color: #fff;
+            opacity: 0.9;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Flowing Lines Animation */
+        .tech-line {
+            stroke-dasharray: 10, 15;
+            animation: dashFlow 20s linear infinite;
+        }
+
+        @keyframes dashFlow {
+            from {
+                stroke-dashoffset: 500;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                filter: drop-shadow(0 0 2px var(--accent-cyan));
+            }
+
+            50% {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 15px var(--accent-cyan));
+            }
+        }
+
+        /* Dynamic Energy Field Background */
+        .energy-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 143, 148, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 143, 148, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: gridMove 60s linear infinite;
+        }
+
+        @keyframes gridMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 500px 1000px;
+            }
+        }
+
+        /* Data Packet Animation */
+        .packet {
+            fill: var(--accent-cyan);
+            filter: drop-shadow(0 0 5px var(--accent-cyan));
+        }
+
+        /* Scanner Beam */
+        #scanner-beam {
+            fill: none;
+            stroke: var(--accent-cyan);
+            stroke-width: 1;
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+
+        /* Section 1 Styles */
+        section {
+            width: 100%;
+            min-height: auto;
+            position: relative;
+        }
+
+        #section-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .hero-section {
+            width: 100%;
+            height: 100vh;
+            max-height: 1080px;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .circuit-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .circuit-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: clamp(200px, 40%, 450px);
+            height: 100%;
+        }
+
+        .circuit-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: clamp(200px, 40%, 450px);
+            height: 100%;
+        }
+
+        @media (max-width: 480px) {
+
+            .circuit-left,
+            .circuit-right {
+                width: 150px;
+                opacity: 0.25;
+            }
+
+            .box {
+                width: 42px;
+                height: 45px;
+                gap: 2px;
+            }
+
+            .box span {
+                font-size: 1rem;
+            }
+
+            .box label {
+                font-size: 0.45rem;
+            }
+
+            .countdown-boxes {
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="energy-field"></div>
+
+    <div class="container">
+        <!-- Section 1: The Design from Image - Background Only -->
+        <section id="section-1">
+            <div class="hero-section">
+                <div class="circuit-bg">
+                    <!-- LEFT SIDE: Orange Stepped Lines Pattern -->
+                    <div class="circuit-left">
+                        <svg width="100%" height="100%" viewBox="0 0 300 1000" preserveAspectRatio="xMinYMin slice">
+                            <defs>
+                                <filter id="glow-orange">
+                                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- LEFT PATTERN -->
+                            <g stroke="var(--accent-orange)" stroke-width="1.2" fill="none" opacity="0.4"
+                                filter="url(#glow-orange)" stroke-linecap="square">
+                                <!-- Stepped Path 1 -->
+                                <path d="M20,0 L20,120" class="tech-line" />
+                                <path d="M20,120 L60,120" class="tech-line" />
+                                <path d="M60,120 L60,280" class="tech-line" />
+                                <path d="M60,280 L100,280" class="tech-line" />
+                                <path d="M100,280 L100,450" class="tech-line" />
+                                <path d="M100,450 L140,450" class="tech-line" />
+                                <path d="M140,450 L140,650" class="tech-line" />
+                                <path d="M140,650 L180,650" class="tech-line" />
+                                <path d="M180,650 L180,900" class="tech-line" />
+
+                                <!-- Stepped Path 2 -->
+                                <path d="M80,50 L80,180" class="tech-line" />
+                                <path d="M80,180 L40,180" class="tech-line" />
+                                <path d="M40,180 L40,350" class="tech-line" />
+                                <path d="M40,350 L80,350" class="tech-line" />
+                                <path d="M80,350 L80,520" class="tech-line" />
+                                <path d="M80,520 L120,520" class="tech-line" />
+                                <path d="M120,520 L120,720" class="tech-line" />
+                                <path d="M120,720 L160,720" class="tech-line" />
+                                <path d="M160,720 L160,950" class="tech-line" />
+
+                                <!-- Additional segments -->
+                                <path d="M140,30 L140,200" class="tech-line" />
+                                <path d="M140,200 L100,200" class="tech-line" />
+                                <path d="M180,380 L180,580" class="tech-line" />
+                                <path d="M180,580 L140,580" class="tech-line" />
+                                <path d="M200,100 L200,420" class="tech-line" />
+                                <path d="M200,420 L240,420" class="tech-line" />
+                                <path d="M220,550 L220,800" class="tech-line" />
+                                <path d="M50,750 L90,750" class="tech-line" />
+                            </g>
+                            <!-- Animated particles on left -->
+                            <g fill="var(--accent-orange)" filter="url(#glow-orange)">
+                                <circle r="2.5" opacity="0.7">
+                                    <animateMotion dur="8s" repeatCount="indefinite"
+                                        path="M20,0 L20,120 L60,120 L60,280 L100,280 L100,450 L140,450 L140,650 L180,650 L180,900" />
+                                </circle>
+                                <circle r="2" opacity="0.6">
+                                    <animateMotion dur="10s" repeatCount="indefinite"
+                                        path="M80,50 L80,180 L40,180 L40,350 L80,350 L80,520 L120,520 L120,720 L160,720 L160,950" />
+                                </circle>
+                                <circle r="2.5" opacity="0.8">
+                                    <animateMotion dur="9s" repeatCount="indefinite"
+                                        path="M140,30 L140,200 L100,200 L180,380 L180,580 L140,580" />
+                                </circle>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- RIGHT SIDE: Orange Stepped Lines Pattern (Mirrored) -->
+                    <div class="circuit-right">
+                        <svg width="100%" height="100%" viewBox="0 0 300 1000" preserveAspectRatio="xMaxYMin slice">
+                            <defs>
+                                <filter id="glow-orange-right">
+                                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <!-- RIGHT PATTERN (mirrored) -->
+                            <g stroke="var(--accent-orange)" stroke-width="1.2" fill="none" opacity="0.4"
+                                filter="url(#glow-orange-right)" stroke-linecap="square">
+                                <!-- Stepped Path 1 (mirrored) -->
+                                <path d="M280,0 L280,120" class="tech-line" />
+                                <path d="M280,120 L240,120" class="tech-line" />
+                                <path d="M240,120 L240,280" class="tech-line" />
+                                <path d="M240,280 L200,280" class="tech-line" />
+                                <path d="M200,280 L200,450" class="tech-line" />
+                                <path d="M200,450 L160,450" class="tech-line" />
+                                <path d="M160,450 L160,650" class="tech-line" />
+                                <path d="M160,650 L120,650" class="tech-line" />
+                                <path d="M120,650 L120,900" class="tech-line" />
+
+                                <!-- Stepped Path 2 (mirrored) -->
+                                <path d="M220,50 L220,180" class="tech-line" />
+                                <path d="M220,180 L260,180" class="tech-line" />
+                                <path d="M260,180 L260,350" class="tech-line" />
+                                <path d="M260,350 L220,350" class="tech-line" />
+                                <path d="M220,350 L220,520" class="tech-line" />
+                                <path d="M220,520 L180,520" class="tech-line" />
+                                <path d="M180,520 L180,720" class="tech-line" />
+                                <path d="M180,720 L140,720" class="tech-line" />
+                                <path d="M140,720 L140,950" class="tech-line" />
+
+                                <!-- Additional segments (mirrored) -->
+                                <path d="M160,30 L160,200" class="tech-line" />
+                                <path d="M160,200 L200,200" class="tech-line" />
+                                <path d="M120,380 L120,580" class="tech-line" />
+                                <path d="M120,580 L160,580" class="tech-line" />
+                                <path d="M100,100 L100,420" class="tech-line" />
+                                <path d="M100,420 L60,420" class="tech-line" />
+                                <path d="M80,550 L80,800" class="tech-line" />
+                                <path d="M210,750 L250,750" class="tech-line" />
+                            </g>
+                            <!-- Animated particles on right -->
+                            <g fill="var(--accent-orange)" filter="url(#glow-orange-right)">
+                                <circle r="2.5" opacity="0.7">
+                                    <animateMotion dur="9s" repeatCount="indefinite"
+                                        path="M280,0 L280,120 L240,120 L240,280 L200,280 L200,450 L160,450 L160,650 L120,650 L120,900" />
+                                </circle>
+                                <circle r="2" opacity="0.6">
+                                    <animateMotion dur="11s" repeatCount="indefinite"
+                                        path="M220,50 L220,180 L260,180 L260,350 L220,350 L220,520 L180,520 L180,720 L140,720 L140,950" />
+                                </circle>
+                                <circle r="2.5" opacity="0.8">
+                                    <animateMotion dur="10s" repeatCount="indefinite"
+                                        path="M160,30 L160,200 L200,200 L120,380 L120,580 L160,580" />
+                                </circle>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Extended Background with circuits (No timeline axis) -->
+        <section id="section-2">
+            <div class="timeline-wrapper">
+                <div class="svg-container">
+                    <svg id="main-svg" viewBox="0 0 1000 3000" preserveAspectRatio="xMidYMin meet">
+                        <!-- Scanner Beam -->
+                        <rect id="scanner-beam" x="0" y="-50" width="1000" height="100" />
+
+                        <!-- Tech Background Circuits (Keeping the side details for atmosphere) -->
+                        <g opacity="0.15" class="tech-line">
+                            <path id="bg-p1" class="timeline-line" d="M100,200 L200,200 Q230,200 230,230 L230,400" />
+                            <path id="bg-p2" class="timeline-line" d="M900,100 L800,100 Q770,100 770,130 L770,300" />
+                            <path id="bg-p3" class="timeline-line"
+                                d="M150,1500 L250,1500 Q280,1500 280,1530 L280,1700" />
+                            <path id="bg-p4" class="timeline-line"
+                                d="M850,2200 L750,2200 Q720,2200 720,2230 L720,2400" />
+
+                            <!-- Additional Tech Details -->
+                            <path class="timeline-line" d="M0,500 L100,500 Q130,500 130,530 L130,800" />
+                            <path class="timeline-line" d="M1000,1200 L900,1200 Q870,1200 870,1230 L870,1500" />
+
+                            <!-- Bottom lines fan -->
+                            <path class="timeline-line pulse-glow" d="M150,2500 L500,2850" />
+                            <path class="timeline-line pulse-glow" d="M850,2500 L500,2850" />
+                            <path class="timeline-line pulse-glow" d="M300,2600 L500,2850" />
+                            <path class="timeline-line pulse-glow" d="M700,2600 L500,2850" />
+                            <circle cx="150" cy="2500" r="3" fill="var(--accent-cyan)" />
+                            <circle cx="850" cy="2500" r="3" fill="var(--accent-cyan)" />
+                        </g>
+
+                        <!-- Traveling Packets (Only strictly background ones, not central line ones) -->
+                        <circle class="packet" r="3" cx="0" cy="0" opacity="0.6">
+                            <animateMotion dur="4s" repeatCount="indefinite"
+                                path="M100,200 L200,200 Q230,200 230,230 L230,400" />
+                        </circle>
+                        <circle class="packet" r="3" cx="0" cy="0" opacity="0.6">
+                            <animateMotion dur="6s" repeatCount="indefinite"
+                                path="M900,100 L800,100 Q770,100 770,130 L770,300" />
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+
+            <footer>
+                <div class="countdown-boxes">
+                    <div class="box-container">
+                        <div class="box">
+                            <span id="days">00</span>
+                        </div>
+                        <div class="box-label">days</div>
+                    </div>
+                    <div class="box-container">
+                        <div class="box">
+                            <span id="hours">00</span>
+                        </div>
+                        <div class="box-label">hours</div>
+                    </div>
+                    <div class="box-container">
+                        <div class="box box-orange">
+                            <span id="mins">00</span>
+                        </div>
+                        <div class="box-label">minutes</div>
+                    </div>
+                    <div class="box-container" style="perspective: 1000px;">
+                        <div class="box box-orange">
+                            <span id="secs">00</span>
+                        </div>
+                        <div class="box-label">seconds</div>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Scanner Beam fallback for iframe (simplified movement)
+        gsap.to("#scanner-beam", {
+            attr: { y: 3000 },
+            duration: 40,
+            repeat: -1,
+            ease: "none"
+        });
+
+        // Countdown Logic
+        const targetDate = new Date("April 30, 2026 00:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            updateValue("days", days);
+            updateValue("hours", hours);
+            updateValue("mins", minutes);
+            updateValue("secs", seconds);
+        }
+
+        function updateValue(id, value) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const displayValue = value < 10 ? "0" + value : value;
+            if (el.innerText !== displayValue.toString()) {
+                if (id === 'secs') {
+                    // Animation ONLY for seconds
+                    gsap.timeline()
+                        .to(el, { y: 10, opacity: 0, scale: 0.8, duration: 0.25, ease: "power2.in" })
+                        .set(el, { innerText: displayValue, y: -15 })
+                        .to(el, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)" });
+                } else {
+                    // Instant update for others
+                    el.innerText = displayValue;
+                }
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+
+</html>
